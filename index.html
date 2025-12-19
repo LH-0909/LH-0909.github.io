@@ -310,6 +310,82 @@
         /* ====================
            移动端适配 (Responsive)
         ==================== */
+        /* ====================
+           7. 新增：联系板块 (Grid & Form 样式)
+        ==================== */
+        
+        /* 栅格布局核心代码 */
+        .contact-grid-layout {
+            display: grid; 
+            grid-template-columns: 1fr 1.5fr; /* 定义两列：左侧占1份，右侧占1.5份 */
+            gap: 50px; /* 列间距 */
+            align-items: start;
+        }
+
+        /* 左侧信息样式 */
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        .icon-box {
+            width: 50px;
+            height: 50px;
+            background: rgba(108, 99, 255, 0.1);
+            color: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            margin-right: 15px;
+        }
+
+        /* 表单样式 */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        .form-group input, 
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 2px solid rgba(0,0,0,0.1); /* 默认边框 */
+            background: rgba(255,255,255,0.5);
+            font-family: inherit;
+            font-size: 0.95rem;
+            color: var(--text-main);
+            transition: var(--transition);
+            outline: none;
+        }
+        /* 深色模式适配 */
+        [data-theme="dark"] .form-group input, 
+        [data-theme="dark"] .form-group textarea {
+            background: rgba(0,0,0,0.2);
+            border-color: rgba(255,255,255,0.1);
+            color: white;
+        }
+
+        /* 表单聚焦效果 */
+        .form-group input:focus, 
+        .form-group textarea:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(108, 99, 255, 0.1);
+        }
+
+        /* 响应式调整：手机端变为单列 */
+        @media (max-width: 768px) {
+            .contact-grid-layout {
+                grid-template-columns: 1fr; /* 强制变为一列 */
+                gap: 30px;
+            }
+        }
         @media (max-width: 768px) {
             .section-header h2 { font-size: 2rem; }
             /* 导航栏变为汉堡菜单 */
@@ -348,13 +424,14 @@
 
     <nav class="navbar">
         <div class="container nav-container">
-            <a href="#hero" class="logo text-gradient">&lt;ZhangSan /&gt;</a>
+            <a href="#hero" class="logo text-gradient">&lt;李航 /&gt;</a>
             <ul class="nav-links">
                 <li><a href="#hero" class="nav-link active">首页</a></li>
                 <li><a href="#about" class="nav-link">关于</a></li>
                 <li><a href="#experience" class="nav-link">经历</a></li>
                 <li><a href="#portfolio" class="nav-link">作品</a></li>
                 <li><a href="#awards" class="nav-link">奖项</a></li>
+                <li><a href="#contact" class="nav-link">联系</a></li>
             </ul>
             <div class="nav-actions">
                 <button class="theme-toggle-btn" id="themeToggle" aria-label="切换主题">
@@ -370,10 +447,10 @@
     <section id="hero" class="hero">
         <div class="container hero-content">
             <div class="hero-text hidden-state">
-                <h1>你好, 我是 <span class="text-gradient">张三</span></h1>
+                <h1>你好, 我是 <span class="text-gradient">李航</span></h1>
                 <h2>我是 <span class="typing-text"></span><span class="typing-cursor"></span></h2>
                 <p class="text-muted" style="max-width: 500px; margin-bottom: 30px;">
-                    一名热衷于打造卓越用户体验的前端开发者。专注于现代 Web 技术栈，喜欢探索设计与代码的边界。
+                    一名热衷于前端的学生。专注于现代 Web 技术，喜欢探索设计与代码的边界。
                 </p>
                 <div class="hero-btn-group">
                     <a href="#portfolio" class="btn btn-primary">查看作品 <i class="fas fa-arrow-right"></i></a>
@@ -381,7 +458,7 @@
                 </div>
             </div>
             <div class="hero-image hidden-state" style="transition-delay: 0.2s;">
-                <img src="https://via.placeholder.com/400x400?text=Avatar" alt="我的头像">
+                <img src="我的头像.jpg" alt="我的头像">
             </div>
         </div>
     </section>
@@ -400,7 +477,7 @@
                     <div class="info-list">
                         <div class="info-item">
                             <i class="fas fa-user-graduate"></i>
-                            <span><strong>学历:</strong> 本科在读 (2025届)</span>
+                            <span><strong>学历:</strong> 本科在读 (2024届)</span>
                         </div>
                         <div class="info-item">
                             <i class="fas fa-code"></i>
@@ -408,7 +485,7 @@
                         </div>
                         <div class="info-item">
                             <i class="fas fa-envelope"></i>
-                            <span><strong>邮箱:</strong> zhangsan@email.com</span>
+                            <span><strong>邮箱:</strong> 1739819660@qq.com</span>
                         </div>
                     </div>
                 </div>
@@ -542,9 +619,70 @@
                     <a href="#" title="微信"><i class="fab fa-weixin"></i></a>
                     <a href="#" title="邮箱"><i class="fas fa-envelope"></i></a>
                 </div>
-                <p class="text-muted">Designed & Built by ZhangSan © 2025. <br>用于大连海洋大学期末作业展示</p>
+                <p class="text-muted"><br></p>
             </div>
         </footer>
+    </section>
+
+    <section id="contact" class="section">
+        <div class="container">
+            <div class="section-header hidden-state">
+                <h2>联系 <span class="text-gradient">我</span></h2>
+                <p class="text-muted">有合作意向？请填写下方的表单</p>
+            </div>
+
+            <div class="contact-grid-layout hidden-state" style="transition-delay: 0.2s;">
+                
+                <div class="contact-info-side">
+                    <h3>保持联系</h3>
+                    <p class="text-muted" style="margin-bottom: 30px;">
+                        如果您对我的简历感兴趣，或者有任何前端技术问题想要交流，欢迎通过以下方式或右侧表单联系我。
+                    </p>
+                    <div class="contact-item">
+                        <div class="icon-box"><i class="fas fa-envelope"></i></div>
+                        <div>
+                            <h4>Email</h4>
+                            <p>1739819660@qq.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="icon-box"><i class="fab fa-weixin"></i></div>
+                        <div>
+                            <h4>WeChat</h4>
+                            <p>lihang1739819660</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="icon-box"><i class="fas fa-map-marker-alt"></i></div>
+                        <div>
+                            <h4>Location</h4>
+                            <p>辽宁 · 大连</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-form-side glass-card">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">您的姓名</label>
+                            <input type="text" id="name" name="name" placeholder="请输入姓名" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">电子邮箱</label>
+                            <input type="email" id="email" name="email" placeholder="example@mail.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">留言内容</label>
+                            <textarea id="message" name="message" rows="5" placeholder="请输入您的留言..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">
+                            发送留言 <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
     </section>
 
 
@@ -726,9 +864,37 @@
                 });
             });
         });
-
-        console.log("旗舰版简历系统加载完毕 - All Systems Online.");
+// 7. 功能：表单提交交互模拟
+        const contactForm = document.getElementById('contactForm');
+        
+        if(contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault(); // 阻止页面默认刷新
+                
+                // 获取按钮并添加加载动画
+                const btn = this.querySelector('button');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 发送中...';
+                btn.style.opacity = '0.7';
+                
+                // 模拟网络请求 (2秒后显示成功)
+                setTimeout(() => {
+                    btn.innerHTML = '<i class="fas fa-check"></i> 发送成功';
+                    btn.style.background = '#2ecc71'; // 变为绿色
+                    btn.style.opacity = '1';
+                    
+                    // 重置表单
+                    contactForm.reset();
+                    
+                    // 3秒后恢复按钮原状
+                    setTimeout(() => {
+                        btn.innerHTML = originalText;
+                        btn.style.background = ''; 
+                    }, 3000);
+                }, 2000);
+            });
+        }
+        console.log("简历系统加载完毕");
     </script>
 </body>
-
 </html>
