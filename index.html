@@ -6,7 +6,7 @@
     <title>我的简历 </title>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
     <style>
         /* ====================
            CSS 核心配置 (变量与主题)
@@ -418,9 +418,91 @@
             .timeline-dot { left: 20px; }
             .timeline-content { width: 100%; margin-left: 45px; padding: 25px; box-sizing: border-box; }
         }
+        /* ====================
+   水墨诗词特效样式
+==================== */
+#poem-container {
+    position: fixed;
+    top: 90px; /* 避开导航栏的高度 */
+    right: 50px; /* 距离右边的距离 */
+    z-index: 2000; /* 保证在最上层 */
+    display: flex;
+    flex-direction: row-reverse; /* 这里的反向是因为古文是从右往左读：第一句在右，第二句在左 */
+    gap: 15px; /* 两列之间的间距 */
+    pointer-events: none; /* 让鼠标点击可以穿透文字，不影响下方按钮点击 */
+    mix-blend-mode: multiply; /* 正片叠底，更有水墨融合感 (仅在浅色模式有效) */
+}
+
+/* 竖排文字容器 */
+.poem-col {
+    writing-mode: vertical-rl; /* 竖排文字 */
+    font-family: 'Ma Shan Zheng', 'KaiTi', 'STKaiti', serif; /* 优先用毛笔字体 */
+    font-size: 28px;
+    line-height: 1.5;
+    min-height: 300px;
+}
+
+/* 单个汉字的样式 */
+.ink-char {
+    opacity: 0; /* 初始不可见 */
+    display: inline-block;
+    transform: scale(1.5); /* 初始放大，模拟墨水晕开 */
+    filter: blur(4px); /* 初始模糊 */
+    animation: inkAppear 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    margin-bottom: 5px; /* 字间距 */
+    color: #2d3436; /* 默认墨色 */
+}
+
+/* 水墨显现动画 */
+@keyframes inkAppear {
+    to {
+        opacity: 1;
+        transform: scale(1);
+        filter: blur(0);
+    }
+}
+
+/* 深色模式适配：字变白，去掉正片叠底 */
+[data-theme="dark"] #poem-container {
+    mix-blend-mode: normal;
+}
+[data-theme="dark"] .ink-char {
+    color: rgba(255, 255, 255, 0.8);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3); /* 发光效果代替水墨晕染 */
+}
+
+/* 移动端隐藏（屏幕太小会遮挡内容） */
+@media (max-width: 768px) {
+    #poem-container { display: none; }
+}
+
+/* ====================
+   雪花特效样式
+==================== */
+.snowflake {
+    position: fixed;
+    top: -10px;
+    z-index: 9999; /* 保证雪花在最上层 */
+    color: #fff;
+    font-size: 1em;
+    pointer-events: none; /* 雪花不影响点击 */
+    border-radius: 50%;
+    background-color: white; /* 雪花颜色 */
+    box-shadow: 0 0 5px rgba(255,255,255,0.8); /* 雪花光晕，浅色背景也能看见 */
+    animation: fall linear forwards;
+}
+
+/* 下落动画 */
+@keyframes fall {
+    to {
+        transform: translateY(105vh); /* 落到屏幕底部下方 */
+    }
+}
     </style>
 </head>
 <body>
+    <div id="poem-container">
+    <div id="poem-line-1" class="poem-col"></div> <div id="poem-line-2" class="poem-col"></div> </div>
 
     <nav class="navbar">
         <div class="container nav-container">
@@ -545,7 +627,7 @@
                     <div class="timeline-content glass-card">
                         <h4>大连海洋大学</h4>
                         <span class="role">海洋渔业科学与技术专业</span>
-                        <p class="text-muted">学业成绩水产与生命学院排名第一，创新创业大赛获得校奖，动植物水景造型大赛省二等奖，智慧海洋比赛进入省赛</p>
+                        <p class="text-muted">学业成绩水产与生命学院排名第一。创新创业大赛获得校奖，动植物水景造型大赛省二等奖，智慧海洋比赛进入省赛。</p>
                     </div>
                 </div>
                 <div class="timeline-block hidden-state" style="transition-delay: 0.2s;">
@@ -556,7 +638,7 @@
                     <div class="timeline-content glass-card">
                         <h4>大连海洋大学</h4>
                         <span class="role">数据科学与大数据技术</span>
-                        <p class="text-muted">发表软著，参加蓝桥杯</p>
+                        <p class="text-muted">发表软著，积极备战蓝桥杯程序设计大赛。深入学习数据挖掘与可视化技术。</p>
                     </div>
                 </div>
             </div>
@@ -915,6 +997,103 @@
                 }, 2000);
             });
         }
+        // ====================
+// ====================
+// 8. 新增：水墨诗词 + 飘雪特效
+// ====================
+const poemConfig = {
+    line1: "落魄谷中寒风吹", 
+    line2: "春秋蝉鸣少年归", 
+    speed: 300,            // 打字速度
+    startDelay: 500,       // 诗句开始延迟
+    snowDuration: 10000    // 雪花持续时间 (10秒)
+};
+
+// --- 雪花控制逻辑 ---
+let snowInterval = null;
+
+function createSnow() {
+    const snowflake = document.createElement('div');
+    snowflake.classList.add('snowflake');
+    
+    // 随机位置 (0-100vw)
+    snowflake.style.left = Math.random() * 100 + 'vw';
+    
+    // 随机大小 (3px - 8px)
+    const size = Math.random() * 5 + 3 + 'px';
+    snowflake.style.width = size;
+    snowflake.style.height = size;
+    
+    // 随机透明度
+    snowflake.style.opacity = Math.random() * 0.5 + 0.3;
+    
+    // 随机下落时间 (3s - 8s)
+    const duration = Math.random() * 5 + 3 + 's';
+    snowflake.style.animationDuration = duration;
+
+    document.body.appendChild(snowflake);
+
+    // 动画结束后移除元素，防止页面卡顿
+    setTimeout(() => {
+        snowflake.remove();
+    }, parseFloat(duration) * 1000);
+}
+
+function startSnowfall() {
+    // 每 100 毫秒生成一片雪花 (越小雪越大)
+    snowInterval = setInterval(createSnow, 100);
+    
+    // 10秒后停止生成雪花
+    setTimeout(() => {
+        clearInterval(snowInterval);
+    }, poemConfig.snowDuration);
+}
+
+// --- 诗句打字机逻辑 ---
+function playPoemEffect() {
+    const col1 = document.getElementById('poem-line-1');
+    const col2 = document.getElementById('poem-line-2');
+    
+    function createCharSpan(char) {
+        const span = document.createElement('span');
+        span.textContent = char;
+        span.className = 'ink-char';
+        return span;
+    }
+
+    let i = 0;
+    let j = 0;
+
+    // 打印第一句
+    function typeLine1() {
+        if (i < poemConfig.line1.length) {
+            col1.appendChild(createCharSpan(poemConfig.line1[i]));
+            i++;
+            setTimeout(typeLine1, poemConfig.speed);
+        } else {
+            // 第一句打完，开始打第二句
+            setTimeout(typeLine2, poemConfig.speed);
+        }
+    }
+
+    // 打印第二句
+    function typeLine2() {
+        if (j < poemConfig.line2.length) {
+            col2.appendChild(createCharSpan(poemConfig.line2[j]));
+            j++;
+            setTimeout(typeLine2, poemConfig.speed);
+        } else {
+            // 【关键点】第二句打完后，触发下雪
+            startSnowfall();
+        }
+    }
+
+    // 启动
+    setTimeout(typeLine1, poemConfig.startDelay);
+}
+
+// 页面加载完成后触发
+window.addEventListener('load', playPoemEffect);
         console.log("简历系统加载完毕");
     </script>
 </body>
