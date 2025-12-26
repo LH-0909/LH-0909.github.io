@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>获奖详情 - 李航</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 简单的子页面样式 */
+        body { font-family: 'Poppins', sans-serif; background: #f0f2f5; color: #2d3436; margin: 0; padding: 0; line-height: 1.6; }
+        .container { max-width: 800px; margin: 50px auto; padding: 20px; }
+        
+        .detail-card {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        h1 { color: #6C63FF; margin-bottom: 10px; }
+        .date { color: #636e72; font-size: 0.9rem; margin-bottom: 30px; display: block; }
+        
+        .img-box {
+            width: 100%;
+            height: 300px;
+            background: #dfe6e9; /* 占位灰色背景 */
+            border-radius: 12px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .img-box img { width: 100%; height: auto; }
+
+        .content { font-size: 1.1rem; margin-bottom: 40px; }
+        
+        .back-btn {
+            display: inline-block;
+            padding: 10px 25px;
+            background: #6C63FF;
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .back-btn:hover { background: #5a54d6; transform: translateY(-2px); }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="detail-card">
+            <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> 返回主页</a>
+            
+            <div style="margin-top: 30px;">
+                <h1>中国软著著作权</h1>
+                <span class="date">颁发日期：2024年6月</span>
+            </div>
+
+            <div class="img-box">
+                <p style="color:#888;"><img src="软著.jpg" alt="软著证书"></p>
+            </div>
+
+            <div class="content">
+                <h3>项目介绍</h3>
+                <p>
+                    我在2024年成功申请并获得了中国软件著作权登记证书，标志着我在软件开发领域的专业能力得到了官方认可。该软件项目旨在提升水产养殖的智能化管理水平，结合物联网技术，实现对养殖环境的实时监控和数据分析。
+                </p>
+                <p>
+                    通过此次软著的获得，不仅保护了我的知识产权，也为未来的项目开发和商业应用奠定了坚实的基础。我计划继续深化该软件的功能，推动其在实际养殖中的应用，助力水产行业的数字化转型。
+                </p>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
